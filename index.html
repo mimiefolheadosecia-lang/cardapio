@@ -135,9 +135,12 @@
         let payload = montarBRCode(total);
         document.getElementById("pix_copia").value = payload;
         let qrBox = document.getElementById("qr_box");
-        qrBox.innerHTML = "";
-        new QRCode(qrBox, { text: payload, width: 150, height: 150 });
-      } else {
+        let urlQr = "https://" + "api.qrserver.com/v1/create-qr-code/?size=160x160&data=
+ + encodeURIComponent(payload);
+qrBox.innerHTML = `<img src="${urlQr}" width="160" height="160" alt="QR Code Pix">`;
+} else {
+
+    
         areaPix.style.display = "none";
       }
     }
