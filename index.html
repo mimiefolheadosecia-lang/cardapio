@@ -4,16 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cardápio • Churros & Cia Aracaju</title>
-<script src="https://cloudflare.com"></script>
-<script src="https://cloudflare.com"></script>
-<script src="https://cloudflare.com"></script>
-
-
-
+  <script src="https://cloudflare.com"></script>
   <style>
     body{background:#111;color:#fff;font-family:sans-serif;margin:0;padding:15px;padding-bottom:95px}
-    .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3);image-rendering:-webkit-optimize-contrast}
-
     .topo{text-align:center;margin-bottom:15px}
     h1{font-size:20px;color:#f5b014;margin:8px 0 2px}
     .sub{font-size:13px;color:#ccc}
@@ -28,16 +21,11 @@
     .btn-pix{background:#00bdae;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer;margin-top:5px}
     .barra-fixa{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:12px 15px;border-top:2px solid #f5b014;display:flex;justify-content:space-between;align-items:center}
     .btn-zap{background:#25d366;color:#111;border:none;padding:12px 18px;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
-  </style>
+  .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3)}</style>
 </head>
 <body>
   <div class="topo">
-    <img src="logo.jpg" alt="Logo Churros & Cia Aracaju" class="logo">
-<script src="https://cloudflare.com"></script>
-<script src="https://unpkg.com"></script>
-
-
-    <h1>CHURROS & CIA ARACAJU</h1>
+    <img src="logo.jpg" class="logo"><h1>CHURROS & CIA ARACAJU</h1>
     <div class="sub">Crocante por fora, explosão por dentro • Delivery até 4 km</div>
   </div>
   <div class="sec">🍩 Churros & Caixinhas</div>
@@ -135,12 +123,9 @@
         let payload = montarBRCode(total);
         document.getElementById("pix_copia").value = payload;
         let qrBox = document.getElementById("qr_box");
-        let urlQr = "https://" + "api.qrserver.com/v1/create-qr-code/?size=160x160&data=
- + encodeURIComponent(payload);
-qrBox.innerHTML = `<img src="${urlQr}" width="160" height="160" alt="QR Code Pix">`;
-} else {
-
-    
+        qrBox.innerHTML = "";
+        qrBox.innerHTML = `<img src="https://qrserver.com{encodeURIComponent(payload)}" width="160" height="160">`;
+      } else {
         areaPix.style.display = "none";
       }
     }
