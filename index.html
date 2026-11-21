@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cardapio - Churros & Cia Aracaju</title>
+  <title>Cardápio • Churros & Cia Aracaju</title>
+  <script src="https://cloudflare.com"></script>
   <style>
     body{background:#111;color:#fff;font-family:sans-serif;margin:0;padding:15px;padding-bottom:95px}
     .topo{text-align:center;margin-bottom:15px}
-    .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3)}
     h1{font-size:20px;color:#f5b014;margin:8px 0 2px}
     .sub{font-size:13px;color:#ccc}
     .sec{color:#f5b014;border-bottom:1px solid #333;padding-bottom:5px;margin:18px 0 10px;font-size:16px}
@@ -21,13 +21,12 @@
     .btn-pix{background:#00bdae;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer;margin-top:5px}
     .barra-fixa{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:12px 15px;border-top:2px solid #f5b014;display:flex;justify-content:space-between;align-items:center}
     .btn-zap{background:#25d366;color:#111;border:none;padding:12px 18px;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
-  </style>
+  .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3)}</style>
 </head>
 <body>
   <div class="topo">
-    <img src="logo.jpg" alt="Logo" class="logo">
-    <h1>CHURROS & CIA ARACAJU</h1>
-    <div class="sub">Crocante por fora, explosao por dentro • Delivery ate 4 km</div>
+    <img src="logo.jpg" class="logo"><h1>CHURROS & CIA ARACAJU</h1>
+    <div class="sub">Crocante por fora, explosão por dentro • Delivery até 4 km</div>
   </div>
   <div class="sec">🍩 Churros & Caixinhas</div>
   <div id="lista_churros"></div>
@@ -38,25 +37,25 @@
     <input type="text" id="cliente" placeholder="Seu Nome Completo *" required>
     <input type="tel" id="telefone" placeholder="Seu WhatsApp com DDD (ex: 79 99999-9999) *" required>
     <select id="bairro" onchange="atualizarTotal()">
-      <option value="0" data-nome="">-- Selecione seu Bairro (Raio ate 4 km) * --</option>
-      <option value="0" data-nome="Retirar no Local (Jose Conrado de Araujo)">Retirar no Local (Jose Conrado de Araujo) - Gratis</option>
-      <option value="2.00" data-nome="Jose Conrado de Araujo">Jose Conrado de Araujo - Frete R$ 2,00</option>
-      <option value="2.00" data-nome="Novo Paraiso / America / Santos Dumont">Novo Paraiso / America / Santos Dumont - Frete R$ 2,00</option>
+      <option value="0" data-nome="">-- Selecione seu Bairro (Raio até 4 km) * --</option>
+      <option value="0" data-nome="Retirar no Local (José Conrado de Araújo)">Retirar no Local (José Conrado de Araújo) - Grátis</option>
+      <option value="2.00" data-nome="José Conrado de Araújo">José Conrado de Araújo - Frete R$ 2,00</option>
+      <option value="2.00" data-nome="Novo Paraíso / América / Santos Dumont">Novo Paraíso / América / Santos Dumont - Frete R$ 2,00</option>
       <option value="2.00" data-nome="Capucho / Olaria">Capucho / Olaria - Frete R$ 2,00</option>
-      <option value="4.00" data-nome="Siqueira Campos / Getulio Vargas / Cirurgia">Siqueira Campos / Getulio Vargas / Cirurgia - Frete R$ 4,00</option>
-      <option value="4.00" data-nome="Centro / Santo Antonio / Palestina">Centro / Santo Antonio / Palestina - Frete R$ 4,00</option>
-      <option value="4.00" data-nome="Cidade Nova / Jardim Centenario / Ponto Novo">Cidade Nova / Jardim Centenario / Ponto Novo - Frete R$ 4,00</option>
+      <option value="4.00" data-nome="Siqueira Campos / Getúlio Vargas / Cirurgia">Siqueira Campos / Getúlio Vargas / Cirurgia - Frete R$ 4,00</option>
+      <option value="4.00" data-nome="Centro / Santo Antônio / Palestina">Centro / Santo Antônio / Palestina - Frete R$ 4,00</option>
+      <option value="4.00" data-nome="Cidade Nova / Jardim Centenário / Ponto Novo">Cidade Nova / Jardim Centenário / Ponto Novo - Frete R$ 4,00</option>
     </select>
-    <input type="text" id="endereco" placeholder="Rua, Numero e Ponto de Referencia *">
+    <input type="text" id="endereco" placeholder="Rua, Número e Ponto de Referência *">
     <select id="pagamento" onchange="atualizarTotal()">
       <option value="Pix">💳 Pagamento: Pix (QR Code / Copia e Cola)</option>
-      <option value="Cartao de Credito (Maquininha)">💳 Pagamento: Cartao de Credito</option>
-      <option value="Cartao de Debito (Maquininha)">💳 Pagamento: Cartao de Debito</option>
+      <option value="Cartão de Crédito (Maquininha)">💳 Pagamento: Cartão de Crédito</option>
+      <option value="Cartão de Débito (Maquininha)">💳 Pagamento: Cartão de Débito</option>
       <option value="Dinheiro">💵 Pagamento: Dinheiro</option>
     </select>
     <div id="area_pix" class="pix-box">
       <strong style="color:#00bdae">📱 Pague agora via Pix</strong><br>
-      <small style="color:#ccc">Chave Aleatoria: <b>fdb4a231-98d9-436c-8ae8-bb402e545b87</b></small><br>
+      <small style="color:#ccc">Chave Aleatória: <b>fdb4a231-98d9-436c-8ae8-bb402e545b87</b></small><br>
       <div id="qr_box" style="display:inline-block;background:#fff;padding:8px;border-radius:8px;margin:8px 0"></div>
       <textarea id="pix_copia" rows="2" readonly style="font-size:11px"></textarea>
       <button type="button" class="btn-pix" onclick="copiarPix(this)">📋 Copiar Pix Copia e Cola</button>
@@ -65,21 +64,23 @@
   <div class="barra-fixa">
     <div><small style="color:#ccc">Total com Frete:</small><br><strong id="total_txt" style="color:#2ecc71;font-size:18px">R$ 0,00</strong></div>
     <a id="btn_zap" href="#" onclick="return enviarZap()" class="btn-zap" style="text-decoration:none;display:inline-block">📲 Pedir no WhatsApp</a>
-  </div>  <script>
+  </div>
+  <script>
+    const ZAP_LOJA = "5579991561236";
     const PIX_CHAVE = "fdb4a231-98d9-436c-8ae8-bb402e545b87";
     const PIX_NOME = "CLAUDEMIR DOS SANTOS NICU";
     const PRODUTOS = [
-      {id:1, cat:"churros", nome:"Churros Tradicional (Doce de Leite)", desc:"Recheio cremoso tradicional + acucar e canela", preco:6.00},
-      {id:2, cat:"churros", nome:"Churros Tradicional (Chocolate)", desc:"Recheio de chocolate + acucar e canela", preco:6.00},
+      {id:1, cat:"churros", nome:"Churros Tradicional (Doce de Leite)", desc:"Recheio cremoso tradicional + açúcar e canela", preco:6.00},
+      {id:2, cat:"churros", nome:"Churros Tradicional (Chocolate)", desc:"Recheio de chocolate + açúcar e canela", preco:6.00},
       {id:3, cat:"churros", nome:"Churros Especial (Leite Ninho)", desc:"Recheado e coberto com muito Leite Ninho", preco:8.00},
-      {id:4, cat:"churros", nome:"Churros Especial (Nutella)", desc:"Recheio legitimo de Nutella", preco:8.00},
+      {id:4, cat:"churros", nome:"Churros Especial (Nutella)", desc:"Recheio legítimo de Nutella", preco:8.00},
       {id:5, cat:"churros", nome:"Churros Gourmet (M&Ms + Cobertura)", desc:"Super recheado com confeitos M&Ms", preco:10.00},
-      {id:6, cat:"churros", nome:"Caixinha Churros Gourmet", desc:"Porcao especial na caixinha com cobertura extra", preco:10.00},
-      {id:7, cat:"bebidas", nome:"Agua Mineral 500ml", desc:"Sem gas, bem gelada", preco:2.50},
-      {id:8, cat:"bebidas", nome:"Refrigerante em Lata 350ml", desc:"Coca-Cola, Guarana ou Fanta gelada", preco:5.00}
+      {id:6, cat:"churros", nome:"Caixinha Churros Gourmet", desc:"Porção especial na caixinha com cobertura extra", preco:10.00},
+      {id:7, cat:"bebidas", nome:"Água Mineral 500ml", desc:"Sem gás, bem gelada", preco:2.50},
+      {id:8, cat:"bebidas", nome:"Refrigerante em Lata 350ml", desc:"Coca-Cola, Guaraná ou Fanta gelada", preco:5.00}
     ];
     let carrinho = {};
-    function campoPix(id, v){ return id + String(v.length).padStart(2,"0") + v; }
+    function campoPix(id, v){ return id + String(v.length).padStart(2,'0') + v; }
     function crc16(s){
       let c = 0xFFFF;
       for(let i=0; i<s.length; i++){
@@ -87,7 +88,7 @@
         for(let j=0; j<8; j++) c = (c & 0x8000) ? ((c << 1) ^ 0x1021) : (c << 1);
         c &= 0xFFFF;
       }
-      return c.toString(16).toUpperCase().padStart(4,"0");
+      return c.toString(16).toUpperCase().padStart(4,'0');
     }
     function montarBRCode(valor){
       let mai = campoPix("00","br.gov.bcb.pix") + campoPix("01",PIX_CHAVE);
@@ -98,7 +99,7 @@
       let hc="", hb="";
       PRODUTOS.forEach(p=>{
         let q = carrinho[p.id]||0;
-        let card = `<div class="prod"><div><strong>${p.nome}</strong><br><small style="color:#aaa">${p.desc}</small><br><span class="preco">R$ ${p.preco.toFixed(2).replace(".",",")}</span></div><div class="qtd-box"><button class="btn-q" onclick="mudar(${p.id},-1)">-</button><span>${q}</span><button class="btn-q" onclick="mudar(${p.id},1)">+</button></div></div>`;
+        let card = `<div class="prod"><div><strong>${p.nome}</strong><br><small style="color:#aaa">${p.desc}</small><br><span class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</span></div><div class="qtd-box"><button class="btn-q" onclick="mudar(${p.id},-1)">-</button><span>${q}</span><button class="btn-q" onclick="mudar(${p.id},1)">+</button></div></div>`;
         if(p.cat=="churros") hc+=card; else hb+=card;
       });
       document.getElementById("lista_churros").innerHTML = hc;
@@ -114,7 +115,7 @@
       PRODUTOS.forEach(p => { subtotal += (carrinho[p.id]||0) * p.preco; });
       let frete = parseFloat(document.getElementById("bairro").value) || 0;
       let total = subtotal > 0 ? subtotal + frete : 0;
-      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace(".",",");
+      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.',',');
       let pag = document.getElementById("pagamento").value;
       let areaPix = document.getElementById("area_pix");
       if(pag === "Pix"){
@@ -122,7 +123,8 @@
         let payload = montarBRCode(total);
         document.getElementById("pix_copia").value = payload;
         let qrBox = document.getElementById("qr_box");
-        qrBox.innerHTML = `<img src="Screenshot_20261120_215244_PagBank.jpg" width="160" height="160" alt="QR Code Pix">`;
+        qrBox.innerHTML = "";
+        qrBox.innerHTML = `<img src="https://qrserver.com&data={encodeURIComponent(payload)}" width="160" height="160">`;
       } else {
         areaPix.style.display = "none";
       }
@@ -131,7 +133,7 @@
       let txt = document.getElementById("pix_copia");
       txt.select();
       navigator.clipboard.writeText(txt.value);
-      btn.innerText = "✅ Codigo Copiado!";
+      btn.innerText = "✅ Código Copiado!";
       setTimeout(()=> btn.innerText = "📋 Copiar Pix Copia e Cola", 2500);
     }
     function enviarZap(){
@@ -140,7 +142,7 @@
       PRODUTOS.forEach(p => {
         let q = carrinho[p.id]||0;
         if(q > 0){
-          itens.push(`${q}x ${p.nome} (R$ ${(q*p.preco).toFixed(2).replace(".",",")})`);
+          itens.push(`${q}x ${p.nome} (R$ ${(q*p.preco).toFixed(2).replace('.',',')})`);
           subtotal += q * p.preco;
         }
       });
@@ -157,9 +159,8 @@
         return false;
       }
       let total = subtotal + frete;
-      let msg = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n*Itens:*\n${itens.join("\n")}\n\n*Cliente:* ${nome}\n*WhatsApp:* ${tel}\n*Entrega:* ${bairroNome}\n` + (end ? `*Endereco:* ${end}\n` : "") + `*Pagamento:* ${pag}\n*Frete:* R$ ${frete.toFixed(2).replace(".",",")}\n*TOTAL:* R$ ${total.toFixed(2).replace(".",",")}`;
-      let zapUrl = "https:" + "//wa.me/5579991561236?text=" + encodeURIComponent(msg);
-      window.open(zapUrl, "_blank");
+      let msg = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n*Itens:*\n${itens.join('\n')}\n\n*Cliente:* ${nome}\n*WhatsApp:* ${tel}\n*Entrega:* ${bairroNome}\n` + (end ? `*Endereço:* ${end}\n` : "") + `*Pagamento:* ${pag}\n*Frete:* R$ ${frete.toFixed(2).replace('.',',')}\n*TOTAL:* R$ ${total.toFixed(2).replace('.',',')}`;
+      window.open(`https://wa.me/5579991561236?text=${encodeURIComponent(msg)}`, '_blank');
       return false;
     }
     render();
