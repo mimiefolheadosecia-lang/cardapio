@@ -160,7 +160,23 @@
       }
       let total = subtotal + frete;
       let msg = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n*Itens:*\n${itens.join('\n')}\n\n*Cliente:* ${nome}\n*WhatsApp:* ${tel}\n*Entrega:* ${bairroNome}\n` + (end ? `*Endereço:* ${end}\n` : "") + `*Pagamento:* ${pag}\n*Frete:* R$ ${frete.toFixed(2).replace('.',',')}\n*TOTAL:* R$ ${total.toFixed(2).replace('.',',')}`;
-      window.open(`https://wa.me/5579991561236?text=${encodeURIComponent(msg)}`, '_blank');
+        const urlPlanilha = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J6bnJZMFNGTF8yeVA1QWhEZlNVb0ExOFY3OWlNTW1OS0p5VFNuTW5yQkpKckZCSmltZWZ5UzNGREo5b1F2cC1ha3hYZy9leGVj");
+    
+
+    
+  fetch(urlPlanilha, {
+
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      cliente: `${nome} (${tel}) - ${bairroNome} | End: ${end}`,
+      pedido: itens.join(", "),
+      valor: `R$ ${total.toFixed(2).replace('.', ',')}`,
+      pagamento: pag
+    })
+  });
+ window.open(`https://wa.me/5579991561236?text=${encodeURIComponent(msg)}`, '_blank');
       return false;
     }
     render();
