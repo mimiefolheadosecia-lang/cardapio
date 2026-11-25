@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cardápio • Churros & Cia Aracaju</title>
+  <!-- Biblioteca oficial corrigida para gerar o QR Code do Pix -->
   <script src="https://cloudflare.com"></script>
   <style>
     body{background:#111;color:#fff;font-family:sans-serif;margin:0;padding:15px;padding-bottom:95px}
@@ -19,19 +20,24 @@
     input,select,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #444;background:#2a2a2a;color:#fff;box-sizing:border-box;font-size:15px}
     .pix-box{background:#132a28;border:1px solid #00bdae;padding:12px;border-radius:10px;text-align:center;margin-top:10px}
     .btn-pix{background:#00bdae;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer;margin-top:5px}
-    .barra-fixa{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:12px 15px;border-top:2px solid #f5b014;display:flex;justify-content:space-between;align-items:center}
+    .barra-fixa{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:12px 15px;border-top:2px solid #f5b014;display:flex;justify-content:space-between;align-items:center;z-index:99}
     .btn-zap{background:#25d366;color:#111;border:none;padding:12px 18px;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
-  .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3)}</style>
+    .logo{width:130px;height:130px;border-radius:50%;border:3px solid #f5b014;object-fit:cover;box-shadow:0 4px 12px rgba(245,176,20,0.3)}
+  </style>
 </head>
 <body>
   <div class="topo">
-    <img src="Logo.jpg" class="logo"><h1>CHURROS & CIA ARACAJU</h1>
+    <img src="Logo.jpg" class="logo" onerror="this.style.display='none'">
+    <h1>CHURROS & CIA ARACAJU</h1>
     <div class="sub">Crocante por fora, explosão por dentro • Delivery até 4 km</div>
   </div>
+
   <div class="sec">🍩 Churros & Caixinhas</div>
   <div id="lista_churros"></div>
+
   <div class="sec">🥤 Bebidas Geladas</div>
   <div id="lista_bebidas"></div>
+
   <div class="box">
     <strong style="color:#f5b014">👤 Seus Dados para Entrega e Registro</strong>
     <input type="text" id="cliente" placeholder="Seu Nome Completo *" required>
@@ -53,6 +59,7 @@
       <option value="Cartão de Débito (Maquininha)">💳 Pagamento: Cartão de Débito</option>
       <option value="Dinheiro">💵 Pagamento: Dinheiro</option>
     </select>
+
     <div id="area_pix" class="pix-box">
       <strong style="color:#00bdae">📱 Pague agora via Pix</strong><br>
       <small style="color:#ccc">Chave Aleatória: <b>fdb4a231-98d9-436c-8ae8-bb402e545b87</b></small><br>
@@ -61,14 +68,22 @@
       <button type="button" class="btn-pix" onclick="copiarPix(this)">📋 Copiar Pix Copia e Cola</button>
     </div>
   </div>
+
   <div class="barra-fixa">
     <div><small style="color:#ccc">Total com Frete:</small><br><strong id="total_txt" style="color:#2ecc71;font-size:18px">R$ 0,00</strong></div>
     <a id="btn_zap" href="#" onclick="return enviarZap()" class="btn-zap" style="text-decoration:none;display:inline-block">📲 Pedir no WhatsApp</a>
   </div>
+
   <script>
+    // =========================================================================
+    // COLE AQUI A URL DO SEU GOOGLE APPS SCRIPT PUBLICADO COMO APP DA WEB
+    // =========================================================================
+    const URL_SCRIPT = "COLE_SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI";
+
     const ZAP_LOJA = "5579991561236";
     const PIX_CHAVE = "fdb4a231-98d9-436c-8ae8-bb402e545b87";
     const PIX_NOME = "CLAUDEMIR DOS SANTOS NICU";
+
     const PRODUTOS = [
       {id:1, cat:"churros", nome:"Churros Tradicional (Doce de Leite)", desc:"Recheio cremoso tradicional + açúcar e canela", preco:6.00},
       {id:2, cat:"churros", nome:"Churros Tradicional (Chocolate)", desc:"Recheio de chocolate + açúcar e canela", preco:6.00},
@@ -79,8 +94,13 @@
       {id:7, cat:"bebidas", nome:"Água Mineral 500ml", desc:"Sem gás, bem gelada", preco:2.50},
       {id:8, cat:"bebidas", nome:"Refrigerante em Lata 350ml", desc:"Coca-Cola, Guaraná ou Fanta gelada", preco:5.00}
     ];
+
     let carrinho = {};
-    function campoPix(id, v){ return id + String(v.length).padStart(2,'0') + v; }
+
+    function campoPix(id, v){ 
+      return id + String(v.length).padStart(2,'0') + v; 
+    }
+
     function crc16(s){
       let c = 0xFFFF;
       for(let i=0; i<s.length; i++){
@@ -90,62 +110,49 @@
       }
       return c.toString(16).toUpperCase().padStart(4,'0');
     }
+
     function montarBRCode(valor){
       let mai = campoPix("00","br.gov.bcb.pix") + campoPix("01",PIX_CHAVE);
       let p = campoPix("00","01") + campoPix("26",mai) + campoPix("52","0000") + campoPix("53","986") + (valor>0 ? campoPix("54",valor.toFixed(2)) : "") + campoPix("58","BR") + campoPix("59",PIX_NOME) + campoPix("60","ARACAJU") + campoPix("62",campoPix("05","CHURROS")) + "6304";
       return p + crc16(p);
     }
+
     function render(){
       let hc="", hb="";
       PRODUTOS.forEach(p=>{
         let q = carrinho[p.id]||0;
-        let card = `<div class="prod"><div><strong>${p.nome}</strong><br><small style="color:#aaa">${p.desc}</small><br><span class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</span></div><div class="qtd-box"><button class="btn-q" onclick="mudar(${p.id},-1)">-</button><span>${q}</span><button class="btn-q" onclick="mudar(${p.id},1)">+</button></div></div>`;
+        let card = `<div class="prod"><div><strong>${p.nome}</strong><br><small style="color:#aaa">${p.desc}</small><br><span class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</span></div><div class="qtd-box"><button type="button" class="btn-q" onclick="mudar(${p.id},-1)">-</button><span>${q}</span><button type="button" class="btn-q" onclick="mudar(${p.id},1)">+</button></div></div>`;
         if(p.cat=="churros") hc+=card; else hb+=card;
       });
       document.getElementById("lista_churros").innerHTML = hc;
       document.getElementById("lista_bebidas").innerHTML = hb;
       atualizarTotal();
     }
+
     function mudar(id, delta){
       carrinho[id] = Math.max(0, (carrinho[id]||0) + delta);
       render();
     }
+
     function atualizarTotal(){
       let subtotal = 0;
       PRODUTOS.forEach(p => { subtotal += (carrinho[p.id]||0) * p.preco; });
       let frete = parseFloat(document.getElementById("bairro").value) || 0;
       let total = subtotal > 0 ? subtotal + frete : 0;
-      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.',',');
-      let pag = document.getElementById("pagamento").value;
-      let areaPix = document.getElementById("area_pix");
-      if(pag === "Pix"){
-        areaPix.style.display = "block";
-        let payload = montarBRCode(total);
-        document.getElementById("pix_copia").value = payload;
-        let qrBox = document.getElementById("qr_box");
-        qrBox.innerHTML = "";
-        qrBox.innerHTML = `<img src="https://qrserver.com&data={encodeURIComponent(payload)}" width="160" height="160">`;
-      } else {
-        areaPix.style.display = "none";
-      }
-    }
-        function atualizarTotal(){
-      let subtotal = 0;
-      PRODUTOS.forEach(p => { subtotal += (carrinho[p.id]||0) * p.preco; });
-      let frete = parseFloat(document.getElementById("bairro").value) || 0;
-      let total = subtotal > 0 ? subtotal + frete : 0;
+      
       document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.',',');
 
-      let pgto = document.getElementById("pagamento").value;
-      let areaPix = document.getElementById("area_pix");
-      if(pgto === "Pix"){
+      // Controla exibição e atualização do QR Code Pix
+      const pag = document.getElementById("pagamento").value;
+      const areaPix = document.getElementById("area_pix");
+      if (pag === "Pix") {
         areaPix.style.display = "block";
-        let brcode = montarBRCode(total);
+        const brcode = montarBRCode(total);
         document.getElementById("pix_copia").value = brcode;
-        let qrBox = document.getElementById("qr_box");
+        const qrBox = document.getElementById("qr_box");
         qrBox.innerHTML = "";
-        if(typeof QRCode !== "undefined"){
-          new QRCode(qrBox, { text: brcode, width: 150, height: 150 });
+        if (typeof QRCode !== "undefined") {
+          new QRCode(qrBox, { text: brcode, width: 140, height: 140 });
         }
       } else {
         areaPix.style.display = "none";
@@ -153,83 +160,14 @@
     }
 
     function copiarPix(btn){
-      let campo = document.getElementById("pix_copia");
+      const campo = document.getElementById("pix_copia");
       campo.select();
       campo.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(campo.value);
-      let txtOriginal = btn.innerText;
+      const original = btn.innerText;
       btn.innerText = "✅ Código Pix Copiado!";
-      setTimeout(() => { btn.innerText = txtOriginal; }, 2500);
+      setTimeout(() => btn.innerText = original, 2500);
     }
 
     function enviarZap(){
-      let cliente = document.getElementById("cliente").value.trim();
-      let telefone = document.getElementById("telefone").value.trim();
-      let selBairro = document.getElementById("bairro");
-      let bairroNome = selBairro.options[selBairro.selectedIndex].getAttribute("data-nome");
-      let frete = parseFloat(selBairro.value) || 0;
-      let endereco = document.getElementById("endereco").value.trim();
-      let pagamento = document.getElementById("pagamento").value;
-
-      let itensLista = [];
-      let subtotal = 0;
-      PRODUTOS.forEach(p => {
-        let q = carrinho[p.id] || 0;
-        if(q > 0){
-          itensLista.push(q + "x " + p.nome);
-          subtotal += q * p.preco;
-        }
-      });
-
-      if(itensLista.length === 0){
-        alert("Selecione pelo menos 1 item do cardápio!");
-        return false;
-      }
-      if(!cliente || !telefone){
-        alert("Por favor, preencha seu Nome e WhatsApp!");
-        return false;
-      }
-      if(!bairroNome){
-        alert("Por favor, selecione seu Bairro ou Retirada!");
-        return false;
-      }
-
-      let totalGeral = subtotal + frete;
-      let resumoItens = itensLista.join(", ");
-
-      // 1. REGISTRA NA PLANILHA E DISPARA O BOT NO TELEGRAM AUTOMATICAMENTE
-      const URL_PLANILHA = "https://google.com";
-      fetch(URL_PLANILHA, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          origem: "cardapio",
-          nome: cliente,
-          whatsapp: telefone,
-          itens: resumoItens + " (" + bairroNome + ")",
-          valor: totalGeral,
-          pagamento: pagamento
-        })
-      });
-
-      // 2. MONTA A MENSAGEM E ABRE O WHATSAPP DA LOJA
-      let msg = "🍩 *NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n" +
-                "👤 *Cliente:* " + cliente + "\n" +
-                "📱 *WhatsApp:* " + telefone + "\n" +
-                "📍 *Bairro:* " + bairroNome + "\n" +
-                (endereco ? "🏠 *Endereço:* " + endereco + "\n" : "") +
-                "\n🛒 *Itens:*\n• " + itensLista.join("\n• ") + "\n\n" +
-                "🚚 *Frete:* R$ " + frete.toFixed(2).replace('.',',') + "\n" +
-                "💰 *Total:* R$ " + totalGeral.toFixed(2).replace('.',',') + "\n" +
-                "💳 *Pagamento:* " + pagamento;
-
-      let urlZap = "https://wa.me/" + ZAP_LOJA + "?text=" + encodeURIComponent(msg);
-      window.open(urlZap, "_blank");
-      return false;
-    }
-
-    render();
-  </script>
-</body>
-</html>
+      const cliente = document.getElementById("cliente").value.trim();
