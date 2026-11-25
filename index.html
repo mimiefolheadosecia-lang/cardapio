@@ -129,56 +129,106 @@
         areaPix.style.display = "none";
       }
     }
-    function copiarPix(btn){
-      let txt = document.getElementById("pix_copia");
-      txt.select();
-      navigator.clipboard.writeText(txt.value);
-      btn.innerText = "✅ Código Copiado!";
-      setTimeout(()=> btn.innerText = "📋 Copiar Pix Copia e Cola", 2500);
-    }
-    function enviarZap(){
-      let itens = [];
+        function atualizarTotal(){
       let subtotal = 0;
-      PRODUTOS.forEach(p => {
-        let q = carrinho[p.id]||0;
-        if(q > 0){
-          itens.push(`${q}x ${p.nome} (R$ ${(q*p.preco).toFixed(2).replace('.',',')})`);
-          subtotal += q * p.preco;
+      PRODUTOS.forEach(p => { subtotal += (carrinho[p.id]||0) * p.preco; });
+      let frete = parseFloat(document.getElementById("bairro").value) || 0;
+      let total = subtotal > 0 ? subtotal + frete : 0;
+      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.',',');
+
+      let pgto = document.getElementById("pagamento").value;
+      let areaPix = document.getElementById("area_pix");
+      if(pgto === "Pix"){
+        areaPix.style.display = "block";
+        let brcode = montarBRCode(total);
+        document.getElementById("pix_copia").value = brcode;
+        let qrBox = document.getElementById("qr_box");
+        qrBox.innerHTML = "";
+        if(typeof QRCode !== "undefined"){
+          new QRCode(qrBox, { text: brcode, width: 150, height: 150 });
         }
-      });
-      if(itens.length === 0){ alert("Adicione pelo menos 1 item ao pedido!"); return false; }
-      let nome = document.getElementById("cliente").value.trim();
-      let tel = document.getElementById("telefone").value.trim();
+      } else {
+        areaPix.style.display = "none";
+      }
+    }
+
+    function copiarPix(btn){
+      let campo = document.getElementById("pix_copia");
+      campo.select();
+      campo.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(campo.value);
+      let txtOriginal = btn.innerText;
+      btn.innerText = "✅ Código Pix Copiado!";
+      setTimeout(() => { btn.innerText = txtOriginal; }, 2500);
+    }
+
+    function enviarZap(){
+      let cliente = document.getElementById("cliente").value.trim();
+      let telefone = document.getElementById("telefone").value.trim();
       let selBairro = document.getElementById("bairro");
       let bairroNome = selBairro.options[selBairro.selectedIndex].getAttribute("data-nome");
       let frete = parseFloat(selBairro.value) || 0;
-      let end = document.getElementById("endereco").value.trim();
-      let pag = document.getElementById("pagamento").value;
-      if(!nome || !tel || !bairroNome){
-        alert("Por favor, preencha seu Nome, WhatsApp e selecione o Bairro!");
+      let endereco = document.getElementById("endereco").value.trim();
+      let pagamento = document.getElementById("pagamento").value;
+
+      let itensLista = [];
+      let subtotal = 0;
+      PRODUTOS.forEach(p => {
+        let q = carrinho[p.id] || 0;
+        if(q > 0){
+          itensLista.push(q + "x " + p.nome);
+          subtotal += q * p.preco;
+        }
+      });
+
+      if(itensLista.length === 0){
+        alert("Selecione pelo menos 1 item do cardápio!");
         return false;
       }
-      let total = subtotal + frete;
-      let msg = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n*Itens:*\n${itens.join('\n')}\n\n*Cliente:* ${nome}\n*WhatsApp:* ${tel}\n*Entrega:* ${bairroNome}\n` + (end ? `*Endereço:* ${end}\n` : "") + `*Pagamento:* ${pag}\n*Frete:* R$ ${frete.toFixed(2).replace('.',',')}\n*TOTAL:* R$ ${total.toFixed(2).replace('.',',')}`;
-        const urlPlanilha = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J6bnJZMFNGTF8yeVA1QWhEZlNVb0ExOFY3OWlNTW1OS0p5VFNuTW5yQkpKckZCSmltZWZ5UzNGREo5b1F2cC1ha3hYZy9leGVj");
-    
+      if(!cliente || !telefone){
+        alert("Por favor, preencha seu Nome e WhatsApp!");
+        return false;
+      }
+      if(!bairroNome){
+        alert("Por favor, selecione seu Bairro ou Retirada!");
+        return false;
+      }
 
-    
-  fetch(urlPlanilha, {
+      let totalGeral = subtotal + frete;
+      let resumoItens = itensLista.join(", ");
 
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      cliente: `${nome} (${tel}) - ${bairroNome} | End: ${end}`,
-      pedido: itens.join(", "),
-      valor: `R$ ${total.toFixed(2).replace('.', ',')}`,
-      pagamento: pag
-    })
-  });
- window.open(`https://wa.me/5579991561236?text=${encodeURIComponent(msg)}`, '_blank');
+      // 1. REGISTRA NA PLANILHA E DISPARA O BOT NO TELEGRAM AUTOMATICAMENTE
+      const URL_PLANILHA = "https://google.com";
+      fetch(URL_PLANILHA, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          origem: "cardapio",
+          nome: cliente,
+          whatsapp: telefone,
+          itens: resumoItens + " (" + bairroNome + ")",
+          valor: totalGeral,
+          pagamento: pagamento
+        })
+      });
+
+      // 2. MONTA A MENSAGEM E ABRE O WHATSAPP DA LOJA
+      let msg = "🍩 *NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n" +
+                "👤 *Cliente:* " + cliente + "\n" +
+                "📱 *WhatsApp:* " + telefone + "\n" +
+                "📍 *Bairro:* " + bairroNome + "\n" +
+                (endereco ? "🏠 *Endereço:* " + endereco + "\n" : "") +
+                "\n🛒 *Itens:*\n• " + itensLista.join("\n• ") + "\n\n" +
+                "🚚 *Frete:* R$ " + frete.toFixed(2).replace('.',',') + "\n" +
+                "💰 *Total:* R$ " + totalGeral.toFixed(2).replace('.',',') + "\n" +
+                "💳 *Pagamento:* " + pagamento;
+
+      let urlZap = "https://wa.me" + ZAP_LOJA + "?text=" + encodeURIComponent(msg);
+      window.open(urlZap, "_blank");
       return false;
     }
+
     render();
   </script>
 </body>
