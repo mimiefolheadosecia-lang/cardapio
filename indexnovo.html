@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Churros & Cia Aracaju - Cardápio Digital</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #121212; color: #f5f5f5; padding-bottom: 100px; }
+    
+    header { text-align: center; padding: 24px 16px 16px; border-bottom: 1px solid #2a2a2a; }
+    header h1 { color: #f5b014; font-size: 1.45rem; letter-spacing: 0.5px; margin-bottom: 6px; }
+    header p { color: #bdbdbd; font-size: 0.85rem; }
+
+    .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+
+    /* Categorias (Accordion) */
+    .categoria { background-color: #1e1e1e; border: 1px solid #333; border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
+    .categoria-header {
+      padding: 15px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #f5b014;
+      background-color: #242424;
+    }
+    .categoria-lista { display: block; padding: 8px 16px; }
+    .categoria-lista.fechado { display: none; }
+
+    .subtitulo-grupo {
+      color: #f5b014;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 12px 0 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px dashed #3a3a3a;
+    }
+
+    /* Itens e Quantidade */
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #2d2d2d;
+    }
+    .item:last-child { border-bottom: none; }
+    .item-info { padding-right: 10px; }
+    .item-nome { font-size: 0.95rem; font-weight: 500; color: #fff; }
+    .item-desc { font-size: 0.78rem; color: #aaa; margin-top: 2px; }
+    .item-preco { font-size: 0.9rem; color: #25d366; font-weight: bold; margin-top: 4px; }
+
+    .qtd-controle { display: flex; align-items: center; gap: 10px; background: #141414; padding: 4px 8px; border-radius: 8px; border: 1px solid #333; }
+    .btn-qtd {
+      background-color: #f5b014;
+      color: #121212;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-qtd:active { opacity: 0.8; }
+    .qtd-valor { min-width: 18px; text-align: center; font-weight: bold; font-size: 0.95rem; }
+
+    /* Formulário */
+    .card-form { background-color: #1e1e1e; border: 1px solid #333; border-radius: 10px; padding: 16px; margin-top: 18px; }
+    .card-form h2 { font-size: 1.05rem; color: #f5b014; margin-bottom: 14px; }
+    
+    .campo { margin-bottom: 12px; }
+    .campo input, .campo select {
+      width: 100%;
+      padding: 12px;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+    .campo input:focus, .campo select:focus { outline: none; border-color: #f5b014; }
+
+    /* Box Pix */
+    .pix-box {
+      background-color: #122b22;
+      border: 1px solid #1f6e50;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .pix-box p { font-size: 0.85rem; color: #a7f3d0; margin-bottom: 6px; }
+    .pix-chave {
+      background: #0d1f18;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      word-break: break-all;
+      color: #fff;
+      border: 1px dashed #25d366;
+      margin-bottom: 8px;
+    }
+    .btn-copiar {
+      background-color: #25d366;
+      color: #0b1f13;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Barra Fixa Inferior */
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #181818;
+      border-top: 1px solid #333;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    .total-texto span { display: block; font-size: 0.8rem; color: #bbb; }
+    .total-texto strong { font-size: 1.25rem; color: #25d366; }
+
+    .btn-whatsapp {
+      background-color: #25d366;
+      color: #111;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>CHURROS & CIA ARACAJU</h1>
+    <p>Crocante por fora, explosão por dentro • Delivery até 4 km</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- CATEGORIA CHURROS -->
+    <div class="categoria">
+      <div class="categoria-header" onclick="toggleCategoria('lista-churros')">
+        <span>🍩 Churros</span>
+        <span>▼</span>
+      </div>
+      <div class="categoria-lista" id="lista-churros">
+        
+        <div class="subtitulo-grupo">Tradicional</div>
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Doce de Leite</div>
+            <div class="item-preco">R$ 6,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Doce de Leite', 6.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Doce de Leite">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Doce de Leite', 6.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Chocolate</div>
+            <div class="item-preco">R$ 6,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Chocolate', 6.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Chocolate">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Chocolate', 6.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Misto</div>
+            <div class="item-desc">Chocolate e doce de leite</div>
+            <div class="item-preco">R$ 6,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Misto (Chocolate e Doce de Leite)', 6.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Misto (Chocolate e Doce de Leite)">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Misto (Chocolate e Doce de Leite)', 6.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="subtitulo-grupo">Churros Premium</div>
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Nutella</div>
+            <div class="item-preco">R$ 8,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Nutella', 8.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Premium Nutella">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Nutella', 8.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Ninho</div>
+            <div class="item-preco">R$ 8,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Ninho', 8.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Premium Ninho">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Ninho', 8.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Ninho com Nutella</div>
+            <div class="item-preco">R$ 8,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Ninho com Nutella', 8.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Premium Ninho com Nutella">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Premium Ninho com Nutella', 8.00, 1)">+</button>
+          </div>
+        </div>
+
+        <div class="subtitulo-grupo">Churros Gourmet</div>
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Churros Gourmet com M&M's</div>
+            <div class="item-preco">R$ 10,00</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Churros Gourmet com M&Ms', 10.00, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Churros Gourmet com M&Ms">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Churros Gourmet com M&Ms', 10.00, 1)">+</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CATEGORIA BEBIDAS -->
+    <div class="categoria">
+      <div class="categoria-header" onclick="toggleCategoria('lista-bebidas')">
+        <span>🥤 Bebidas Geladas</span>
+        <span>▼</span>
+      </div>
+      <div class="categoria-lista" id="lista-bebidas">
+        
+        <div class="item">
+          <div class="item-info">
+            <div class="item-nome">Água Mineral 500ml</div>
+            <div class="item-preco">R$ 2,50</div>
+          </div>
+          <div class="qtd-controle">
+            <button class="btn-qtd" onclick="alterarQtd('Água Mineral 500ml', 2.50, -1)">-</button>
+            <span class="qtd-valor" id="qtd-Água Mineral 500ml">0</span>
+            <button class="btn-qtd" onclick="alterarQtd('Água Mineral 500ml', 2.50, 1)">+</button>
+          </div>
+        </div>
+
