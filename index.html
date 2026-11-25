@@ -224,7 +224,7 @@
                 "💰 *Total:* R$ " + totalGeral.toFixed(2).replace('.',',') + "\n" +
                 "💳 *Pagamento:* " + pagamento;
 
-      let urlZap = "https://wa.me" + ZAP_LOJA + "?text=" + encodeURIComponent(msg);
+      let urlZap = "https://wa.me/" + ZAP_LOJA + "?text=" + encodeURIComponent(msg);
       window.open(urlZap, "_blank");
       return false;
     }
