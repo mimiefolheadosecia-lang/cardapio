@@ -127,3 +127,34 @@
 
   <div class="barra-fixa">
     <div><small style="color:#ccc">Total com Frete:</small><br><strong id="total_txt" style="color:#2ecc71;font-size:18px">R$ 0,00</strong></div>
+  <div class="barra-fixa">
+    <div><small style="color:#ccc">Total com Frete:</small><br><strong id="total_txt" style="color:#2ecc71;font-size:18px">R$ 0,00</strong></div>
+    <button type="button" id="btn_zap" onclick="enviarZap()" class="btn-zap">📲 Pedir no WhatsApp</button>
+  </div>
+
+  <script>
+    const URL_SCRIPT = "https://google.com";
+    const ZAP_LOJA = "5579991561236";
+    let carrinho = {};
+
+    function mudar(nome, preco, delta) {
+      if (!carrinho[nome]) carrinho[nome] = { qtd: 0, preco: preco };
+      carrinho[nome].qtd = Math.max(0, carrinho[nome].qtd + delta);
+      document.getElementById("q-" + nome).innerText = carrinho[nome].qtd;
+      atualizarTotal();
+    }
+
+    function atualizarTotal() {
+      let subtotal = 0;
+      for (let k in carrinho) subtotal += carrinho[k].qtd * carrinho[k].preco;
+      let frete = parseFloat(document.getElementById("bairro").value) || 0;
+      let total = subtotal > 0 ? subtotal + frete : 0;
+      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.', ',');
+      document.getElementById("area_pix").style.display = (document.getElementById("pagamento").value === "Pix") ? "block" : "none";
+    }
+
+    function copiarPix(btn) {
+      navigator.clipboard.writeText("fdb4a231-98d9-436c-8ae8-bb402e545b87");
+      btn.innerText = "✅ Chave Pix Copiada!";
+      setTimeout(() => btn.innerText = "📋 Copiar Chave Pix", 2500);
+    }
