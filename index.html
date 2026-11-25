@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cardápio • Churros & Cia Aracaju</title>
-  
   <style>
     body{background:#111;color:#fff;font-family:sans-serif;margin:0;padding:15px;padding-bottom:95px}
     .topo{text-align:center;margin-bottom:15px}
     h1{font-size:20px;color:#f5b014;margin:8px 0 2px}
     .sub{font-size:13px;color:#ccc}
     .sec{color:#f5b014;border-bottom:1px solid #333;padding-bottom:5px;margin:18px 0 10px;font-size:16px;font-weight:bold}
-    .grupo-titulo{color:#f5b014;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;opacity:0.9}
+    .grupo{color:#f5b014;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px}
     .prod{background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #2c2c2c}
     .preco{color:#2ecc71;font-weight:bold;font-size:15px}
     .qtd-box{display:flex;align-items:center;gap:10px}
@@ -33,10 +32,68 @@
   </div>
 
   <div class="sec">🍩 Churros</div>
-  <div id="lista_churros"></div>
+  <div class="grupo">Tradicional</div>
+
+  <div class="prod">
+    <div><strong>Churros Doce de Leite</strong><br><small style="color:#aaa">Recheio cremoso tradicional + açúcar e canela</small><br><span class="preco">R$ 6,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Doce de Leite',6,-1)">-</button><span id="q-Doce de Leite">0</span><button type="button" class="btn-q" onclick="mudar('Doce de Leite',6,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Churros Chocolate</strong><br><small style="color:#aaa">Recheio de chocolate + açúcar e canela</small><br><span class="preco">R$ 6,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Chocolate',6,-1)">-</button><span id="q-Chocolate">0</span><button type="button" class="btn-q" onclick="mudar('Chocolate',6,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Churros Misto</strong><br><small style="color:#aaa">Doce de leite e chocolate + açúcar e canela</small><br><span class="preco">R$ 6,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Misto (Chocolate e Doce de Leite)',6,-1)">-</button><span id="q-Misto (Chocolate e Doce de Leite)">0</span><button type="button" class="btn-q" onclick="mudar('Misto (Chocolate e Doce de Leite)',6,1)">+</button></div>
+  </div>
+
+  <div class="grupo">Churros Premium</div>
+
+  <div class="prod">
+    <div><strong>Churros Premium Nutella</strong><br><small style="color:#aaa">Recheado com Nutella legítima</small><br><span class="preco">R$ 8,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Premium Nutella',8,-1)">-</button><span id="q-Premium Nutella">0</span><button type="button" class="btn-q" onclick="mudar('Premium Nutella',8,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Churros Premium Ninho</strong><br><small style="color:#aaa">Recheio cremoso de Leite Ninho</small><br><span class="preco">R$ 8,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Premium Ninho',8,-1)">-</button><span id="q-Premium Ninho">0</span><button type="button" class="btn-q" onclick="mudar('Premium Ninho',8,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Churros Premium Ninho com Nutella</strong><br><small style="color:#aaa">Combinação especial de Leite Ninho com Nutella</small><br><span class="preco">R$ 8,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Premium Ninho com Nutella',8,-1)">-</button><span id="q-Premium Ninho com Nutella">0</span><button type="button" class="btn-q" onclick="mudar('Premium Ninho com Nutella',8,1)">+</button></div>
+  </div>
+
+  <div class="grupo">Churros Gourmet</div>
+
+  <div class="prod">
+    <div><strong>Churros Gourmet com M&M's</strong><br><small style="color:#aaa">Super recheado com cobertura e confeitos M&M's</small><br><span class="preco">R$ 10,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Gourmet com M&Ms',10,-1)">-</button><span id="q-Gourmet com M&Ms">0</span><button type="button" class="btn-q" onclick="mudar('Gourmet com M&Ms',10,1)">+</button></div>
+  </div>
 
   <div class="sec">🥤 Bebidas Geladas</div>
-  <div id="lista_bebidas"></div>
+
+  <div class="prod">
+    <div><strong>Água Mineral 500ml</strong><br><small style="color:#aaa">Sem gás, bem gelada</small><br><span class="preco">R$ 2,50</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Água Mineral 500ml',2.5,-1)">-</button><span id="q-Água Mineral 500ml">0</span><button type="button" class="btn-q" onclick="mudar('Água Mineral 500ml',2.5,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Coca-Cola Lata 350ml</strong><br><small style="color:#aaa">Bem gelada</small><br><span class="preco">R$ 5,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Coca-Cola Lata',5,-1)">-</button><span id="q-Coca-Cola Lata">0</span><button type="button" class="btn-q" onclick="mudar('Coca-Cola Lata',5,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Fanta Lata 350ml</strong><br><small style="color:#aaa">Bem gelada</small><br><span class="preco">R$ 5,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Fanta Lata',5,-1)">-</button><span id="q-Fanta Lata">0</span><button type="button" class="btn-q" onclick="mudar('Fanta Lata',5,1)">+</button></div>
+  </div>
+
+  <div class="prod">
+    <div><strong>Guaraná Lata 350ml</strong><br><small style="color:#aaa">Bem gelado</small><br><span class="preco">R$ 5,00</span></div>
+    <div class="qtd-box"><button type="button" class="btn-q" onclick="mudar('Guaraná Lata',5,-1)">-</button><span id="q-Guaraná Lata">0</span><button type="button" class="btn-q" onclick="mudar('Guaraná Lata',5,1)">+</button></div>
+  </div>
 
   <div class="box">
     <strong style="color:#f5b014">👤 Seus Dados para Entrega e Registro</strong>
@@ -54,7 +111,7 @@
     </select>
     <input type="text" id="endereco" placeholder="Rua, Número e Ponto de Referência *">
     <select id="pagamento" onchange="atualizarTotal()">
-      <option value="Pix">💳 Pagamento: Pix (QR Code / Copia e Cola)</option>
+      <option value="Pix">💳 Pagamento: Pix (Copia e Cola)</option>
       <option value="Cartão de Crédito (Maquininha)">💳 Pagamento: Cartão de Crédito</option>
       <option value="Cartão de Débito (Maquininha)">💳 Pagamento: Cartão de Débito</option>
       <option value="Dinheiro">💵 Pagamento: Dinheiro</option>
@@ -63,102 +120,10 @@
     <div id="area_pix" class="pix-box">
       <strong style="color:#00bdae">📱 Pague agora via Pix</strong><br>
       <small style="color:#ccc">Chave Aleatória: <b>fdb4a231-98d9-436c-8ae8-bb402e545b87</b></small><br>
-      <div id="qr_box" style="display:inline-block;background:#fff;padding:8px;border-radius:8px;margin:8px 0"></div>
-      <textarea id="pix_copia" rows="2" readonly style="font-size:11px"></textarea>
-      <button type="button" class="btn-pix" onclick="copiarPix(this)">📋 Copiar Pix Copia e Cola</button>
+      <textarea id="pix_copia" rows="2" readonly style="font-size:11px;margin-top:8px">fdb4a231-98d9-436c-8ae8-bb402e545b87</textarea>
+      <button type="button" class="btn-pix" onclick="copiarPix(this)">📋 Copiar Chave Pix</button>
     </div>
   </div>
 
   <div class="barra-fixa">
     <div><small style="color:#ccc">Total com Frete:</small><br><strong id="total_txt" style="color:#2ecc71;font-size:18px">R$ 0,00</strong></div>
-    <button type="button" id="btn_zap" onclick="enviarZap()" class="btn-zap">📲 Pedir no WhatsApp</button>
-  </div>
-
-  <script>
-    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycby3B5-RunnJhL1X6Nf_YlKGP2G9_ulSicvJPQuj8c9Evq-LC2PesNDJv9GQLg7yyjF2Lg/exec";
-    const ZAP_LOJA = "5579991561236";
-    const PIX_CHAVE = "fdb4a231-98d9-436c-8ae8-bb402e545b87";
-    const PIX_NOME = "CLAUDEMIR DOS SANTOS NICU";
-
-    const PRODUTOS = [
-      {id:1, cat:"churros", grupo:"Tradicional", nome:"Churros Doce de Leite", desc:"Recheio cremoso tradicional + açúcar e canela", preco:6.00},
-      {id:2, cat:"churros", grupo:"Tradicional", nome:"Churros Chocolate", desc:"Recheio de chocolate + açúcar e canela", preco:6.00},
-      {id:3, cat:"churros", grupo:"Tradicional", nome:"Churros Misto", desc:"Doce de leite e chocolate + açúcar e canela", preco:6.00},
-      {id:4, cat:"churros", grupo:"Churros Premium", nome:"Churros Premium Nutella", desc:"Recheado com Nutella legítima", preco:8.00},
-      {id:5, cat:"churros", grupo:"Churros Premium", nome:"Churros Premium Ninho", desc:"Recheio cremoso de Leite Ninho", preco:8.00},
-      {id:6, cat:"churros", grupo:"Churros Premium", nome:"Churros Premium Ninho com Nutella", desc:"Combinação especial de Leite Ninho com Nutella", preco:8.00},
-      {id:7, cat:"churros", grupo:"Churros Gourmet", nome:"Churros Gourmet com M&M's", desc:"Super recheado com cobertura e confeitos M&M's", preco:10.00},
-      {id:8, cat:"bebidas", grupo:"", nome:"Água Mineral 500ml", desc:"Sem gás, bem gelada", preco:2.50},
-      {id:9, cat:"bebidas", grupo:"", nome:"Coca-Cola Lata 350ml", desc:"Bem gelada", preco:5.00},
-      {id:10, cat:"bebidas", grupo:"", nome:"Fanta Lata 350ml", desc:"Bem gelada", preco:5.00},
-      {id:11, cat:"bebidas", grupo:"", nome:"Guaraná Lata 350ml", desc:"Bem gelado", preco:5.00}
-    ];
-
-    let carrinho = {};
-
-    function campoPix(id, v){ 
-      return id + String(v.length).padStart(2,'0') + v; 
-    }
-
-    function crc16(s){
-      let c = 0xFFFF;
-      for(let i=0; i<s.length; i++){
-        c ^= (s.charCodeAt(i) << 8);
-        for(let j=0; j<8; j++) c = (c & 0x8000) ? ((c << 1) ^ 0x1021) : (c << 1);
-        c &= 0xFFFF;
-      }
-      return c.toString(16).toUpperCase().padStart(4,'0');
-    }
-
-    function montarBRCode(valor){
-      let mai = campoPix("00","br.gov.bcb.pix") + campoPix("01",PIX_CHAVE);
-      let p = campoPix("00","01") + campoPix("26",mai) + campoPix("52","0000") + campoPix("53","986") + (valor>0 ? campoPix("54",valor.toFixed(2)) : "") + campoPix("58","BR") + campoPix("59",PIX_NOME) + campoPix("60","ARACAJU") + campoPix("62",campoPix("05","CHURROS")) + "6304";
-      return p + crc16(p);
-    }
-
-    function render(){
-      let hc="", hb="", grupoAtual="";
-      PRODUTOS.forEach(p=>{
-        if(p.cat=="churros" && p.grupo !== grupoAtual){
-          grupoAtual = p.grupo;
-          hc += `<div class="grupo-titulo">${grupoAtual}</div>`;
-        }
-        let q = carrinho[p.id]||0;
-        let card = `<div class="prod"><div><strong>${p.nome}</strong><br><small style="color:#aaa">${p.desc}</small><br><span class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</span></div><div class="qtd-box"><button type="button" class="btn-q" onclick="mudar(${p.id},-1)">-</button><span>${q}</span><button type="button" class="btn-q" onclick="mudar(${p.id},1)">+</button></div></div>`;
-        if(p.cat=="churros") hc+=card; else hb+=card;
-      });
-      document.getElementById("lista_churros").innerHTML = hc;
-      document.getElementById("lista_bebidas").innerHTML = hb;
-      atualizarTotal();
-    }
-
-    function mudar(id, delta){
-      carrinho[id] = Math.max(0, (carrinho[id]||0) + delta);
-      render();
-    }
-
-    function atualizarTotal(){
-      let subtotal = 0;
-      PRODUTOS.forEach(p => { subtotal += (carrinho[p.id]||0) * p.preco; });
-      let frete = parseFloat(document.getElementById("bairro").value) || 0;
-      let total = subtotal > 0 ? subtotal + frete : 0;
-      
-      document.getElementById("total_txt").innerText = "R$ " + total.toFixed(2).replace('.',',');
-
-      const pag = document.getElementById("pagamento").value;
-      const areaPix = document.getElementById("area_pix");
-      if (pag === "Pix") {
-        areaPix.style.display = "block";
-        const brcode = montarBRCode(total);
-        document.getElementById("pix_copia").value = brcode;
-        const qrBox = document.getElementById("qr_box");
-        qrBox.innerHTML = "";
-        if (typeof QRCode !== "undefined") {
-          new QRCode(qrBox, { text: brcode, width: 140, height: 140 });
-        }
-      } else {
-        areaPix.style.display = "none";
-      }
-    }
-
-    function copiarPix(btn){
