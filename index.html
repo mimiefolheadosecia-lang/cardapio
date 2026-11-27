@@ -114,6 +114,9 @@
       font-size: 15px;
       box-sizing: border-box;
     }
+    .hidden {
+      display: none;
+    }
     .btn-whatsapp {
       display: block;
       width: 100%;
@@ -173,13 +176,34 @@
   <label for="cliente-endereco">Endereço (se for entrega)</label>
   <input type="text" id="cliente-endereco" placeholder="Rua, número, ponto de referência">
 
-  <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp()">
+  <label for="forma-pagamento">Forma de Pagamento *</label>
+  <select id="forma-pagamento" onchange="verificarTroco()">
+    <option value="Pix">Pix</option>
+    <option value="Cartão de Crédito / Débito">Cartão de Crédito / Débito</option>
+    <option value="Dinheiro">Dinheiro</option>
+  </select>
+
+  <div id="box-troco" class="hidden">
+    <label for="valor-troco">Troco para quanto? (Deixe em branco se não precisar)</label>
+    <input type="text" id="valor-troco" placeholder="Ex: R$ 50,00">
+  </div>
+
+  <button type="button" class="btn-whatsapp" id="btn-finalizar" onclick="enviarPedido()">
     📲 Enviar Pedido no WhatsApp
   </button>
 
 </div>
 
 <script>
+  // =========================================================================
+  // CONFIGURAÇÕES DA LOJA
+  // =========================================================================
+  const NUMERO_WHATSAPP = "5579991561236";
+  
+  // Cole a URL /exec do seu Google Apps Script dentro das aspas abaixo para 
+  // registrar automaticamente na planilha e disparar o bot do Telegram:
+  const URL_APPS_SCRIPT = ""; 
+
   const produtos = [
     { id: 0, categoria: "tradicionais", nome: "Churros Doce de Leite", desc: "Recheio cremoso de doce de leite", preco: 6.00, qtd: 0 },
     { id: 1, categoria: "tradicionais", nome: "Churros Chocolate", desc: "Recheio cremoso de chocolate", preco: 6.00, qtd: 0 },
@@ -226,6 +250,17 @@
     atualizarResumo();
   }
 
+  function verificarTroco() {
+    const pagamento = document.getElementById("forma-pagamento").value;
+    const boxTroco = document.getElementById("box-troco");
+    if (pagamento === "Dinheiro") {
+      boxTroco.classList.remove("hidden");
+    } else {
+      boxTroco.classList.add("hidden");
+      document.getElementById("valor-troco").value = "";
+    }
+  }
+
   function atualizarResumo() {
     const selecionados = produtos.filter(p => p.qtd > 0);
     const resumoDiv = document.getElementById("resumo-itens");
@@ -251,7 +286,7 @@
     document.getElementById("valor-total").innerText = totalGeral.toFixed(2).replace(".", ",");
   }
 
-  function enviarWhatsApp() {
+  async function enviarPedido() {
     const selecionados = produtos.filter(p => p.qtd > 0);
     if (selecionados.length === 0) {
       alert("Selecione pelo menos 1 item antes de enviar o pedido.");
@@ -264,35 +299,25 @@
     const taxaEntrega = parseFloat(selectEntrega.value);
     const textoEntrega = selectEntrega.options[selectEntrega.selectedIndex].text;
     const endereco = document.getElementById("cliente-endereco").value.trim();
+    const pagamento = document.getElementById("forma-pagamento").value;
+    const troco = document.getElementById("valor-troco").value.trim();
 
     if (!nome || !zapCliente) {
       alert("Por favor, preencha seu Nome e WhatsApp.");
       return;
     }
 
+    let total = taxaEntrega;
+    let listaTextoPlanilha = [];
     let mensagem = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n`;
     mensagem += `*Cliente:* ${nome}\n`;
     mensagem += `*WhatsApp:* ${zapCliente}\n`;
     mensagem += `*Opção:* ${textoEntrega}\n`;
     if (endereco) mensagem += `*Endereço:* ${endereco}\n`;
-    mensagem += `\n*Itens do Pedido:*\n`;
+    mensagem += `*Pagamento:* ${pagamento}`;
+    if (pagamento === "Dinheiro" && troco) {
+      mensagem += ` (Troco para: ${troco})`;
+    }
+    mensagem += `\n\n*Itens do Pedido:*\n`;
 
-    let total = taxaEntrega;
     selecionados.forEach(p => {
-      const sub = p.qtd * p.preco;
-      total += sub;
-      mensagem += `- ${p.qtd}x ${p.nome} (R$ ${sub.toFixed(2).replace(".", ",")})\n`;
-    });
-
-    mensagem += `\n*TOTAL A PAGAR: R$ ${total.toFixed(2).replace(".", ",")}*`;
-
-        const numeroLoja = "5579991561236";
-    const url = `https://whatsapp.com{numeroLoja}&text=${encodeURIComponent(mensagem)}`;
-    window.location.href = url;
-  }
-
-  renderizarCardapio();
-</script>
-
-</body>
-</html>
