@@ -1,221 +1,298 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Churros & Cia Aracaju - Cardápio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Churros & Cia Aracaju</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background-color: #fff8f0; color: #3b2314; padding-bottom: 130px; }
-    header { background: #5c2c16; color: #ffffff; text-align: center; padding: 18px 14px; border-bottom: 4px solid #f59e0b; }
-    header img { max-width: 120px; border-radius: 10px; margin-bottom: 6px; }
-    header h1 { font-size: 1.4rem; }
-    header p { font-size: 0.85rem; color: #fde68a; margin-top: 4px; }
-    .container { max-width: 600px; margin: 0 auto; padding: 14px; }
-    .cat { margin: 20px 0 10px; font-size: 1.1rem; font-weight: bold; color: #78350f; border-bottom: 2px solid #f59e0b; padding-bottom: 4px; }
-    .card { background: #ffffff; border: 1px solid #fde68a; border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .info { padding-right: 8px; }
-    .info h3 { font-size: 1rem; margin-bottom: 4px; }
-    .info p { font-size: 0.82rem; color: #57534e; }
-    .preco { font-weight: bold; color: #b45309; font-size: 0.95rem; margin-top: 4px; display: block; }
-    .sub-item { font-size: 0.82rem; font-weight: bold; color: #15803d; margin-top: 2px; display: block; }
-    .btns { display: flex; align-items: center; gap: 10px; }
-    .btn-m { width: 42px; height: 42px; border-radius: 50%; border: none; background: #f59e0b; color: #fff; font-size: 1.4rem; font-weight: bold; cursor: pointer; }
-    .num { font-size: 1.2rem; font-weight: bold; min-width: 24px; text-align: center; }
-    .box { background: #ffffff; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; margin-top: 22px; }
-    .box h2 { font-size: 1.2rem; margin-bottom: 12px; color: #5c2c16; }
-    .sacola { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
-    .campo { margin-bottom: 12px; }
-    .campo label { display: block; font-size: 0.88rem; font-weight: bold; margin-bottom: 5px; }
-    .campo input, .campo select, .campo textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; }
-    .btn-gps { background: #2563eb; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 6px; }
-    .aviso-gps { font-size: 0.85rem; padding: 8px; border-radius: 6px; font-weight: bold; display: none; }
-    .pix-area { background: #fef3c7; border: 1px dashed #d97706; padding: 12px; border-radius: 8px; text-align: center; margin-top: 8px; }
-    .pix-area img { max-width: 170px; margin: 8px auto; display: block; border-radius: 8px; }
-    .btn-pix { background: #d97706; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; }
-    .btn-enviar { background: #25d366; color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.05rem; font-weight: bold; width: 100%; cursor: pointer; margin-top: 12px; }
-    .rodape { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 2px solid #f59e0b; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; z-index: 999; box-shadow: 0 -2px 10px rgba(0,0,0,0.15); }
-    .rodape-valores { font-size: 0.82rem; line-height: 1.35; }
-    .rodape-total { font-size: 1.1rem; font-weight: bold; color: #15803d; }
-    .btn-rodape { background: #25d366; color: #fff; border: none; padding: 12px 16px; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6e7;
+      color: #4a2508;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #5c2d0c;
+      color: #fff;
+      text-align: center;
+      padding: 20px 15px;
+    }
+    header h1 {
+      margin: 5px 0;
+      font-size: 24px;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #f7d9a8;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 15px;
+    }
+    h2 {
+      font-size: 18px;
+      border-bottom: 2px solid #e0a938;
+      padding-bottom: 5px;
+      margin-top: 25px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ead8b8;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .info h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+    .info p {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #6e4726;
+    }
+    .preco {
+      font-weight: bold;
+      color: #c25900;
+      font-size: 15px;
+    }
+    .subtotal-item {
+      font-size: 13px;
+      color: #1e7e34;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+    .controles {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-qtd {
+      background-color: #f39c12;
+      color: #fff;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-qtd:active {
+      background-color: #d68910;
+    }
+    .qtd-valor {
+      font-size: 18px;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+    }
+    .resumo-box {
+      background: #fffdf8;
+      border: 1px solid #d4b475;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 12px 0 5px;
+      font-size: 14px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    .btn-whatsapp {
+      display: block;
+      width: 100%;
+      background-color: #25d366;
+      color: #fff;
+      text-align: center;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .btn-whatsapp:hover {
+      background-color: #1ebe5d;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="Logo.png" alt="Logo" onerror="this.style.display='none'" />
-    <h1>Churros & Cia Aracaju</h1>
-    <p>Entrega: até 3 km R$ 2,50 • até 4 km R$ 4,00 (José Conrado de Araújo)</p>
-  </header>
+<header>
+  <h1>Churros & Cia Aracaju</h1>
+  <p>Entrega: até 3 km R$ 2,50 • até 4 km R$ 4,00 (José Conrado de Araújo)</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div class="cat">🍩 Churros Tradicionais — R$ 6,00 cada</div>
+  <h2>🍩 Churros Tradicionais — R$ 6,00 cada</h2>
+  <div id="lista-tradicionais"></div>
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros Doce de Leite</h3>
-        <p>Recheio cremoso de doce de leite</p>
-        <span class="preco">R$ 6,00</span>
-        <span class="sub-item" id="s1">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(1, -1)">-</button>
-        <span class="num" id="q1">0</span>
-        <button type="button" class="btn-m" onclick="somar(1, 1)">+</button>
-      </div>
-    </div>
+  <h2>⭐ Churros Especiais — R$ 8,00 cada</h2>
+  <div id="lista-especiais"></div>
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros Chocolate</h3>
-        <p>Recheio cremoso de chocolate</p>
-        <span class="preco">R$ 6,00</span>
-        <span class="sub-item" id="s2">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(2, -1)">-</button>
-        <span class="num" id="q2">0</span>
-        <button type="button" class="btn-m" onclick="somar(2, 1)">+</button>
-      </div>
-    </div>
+  <h2>🥤 Bebidas</h2>
+  <div id="lista-bebidas"></div>
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros Misto</h3>
-        <p>Doce de leite e chocolate juntos</p>
-        <span class="preco">R$ 6,00</span>
-        <span class="sub-item" id="s3">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(3, -1)">-</button>
-        <span class="num" id="q3">0</span>
-        <button type="button" class="btn-m" onclick="somar(3, 1)">+</button>
-      </div>
-    </div>
+  <h2>📋 Finalizar Pedido</h2>
+  <div class="resumo-box">
+    <div id="resumo-itens">🛒 Nenhum item selecionado ainda.</div>
+    <p style="margin: 10px 0 0; font-weight: bold;">Total do Pedido: R$ <span id="valor-total">0,00</span></p>
+  </div>
 
-    <div class="cat">⭐ Churros Especiais — R$ 8,00 cada</div>
+  <label for="cliente-nome">Seu Nome *</label>
+  <input type="text" id="cliente-nome" placeholder="Digite seu nome">
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros de Nutella</h3>
-        <p>Creme de avelã Nutella original</p>
-        <span class="preco">R$ 8,00</span>
-        <span class="sub-item" id="s4">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(4, -1)">-</button>
-        <span class="num" id="q4">0</span>
-        <button type="button" class="btn-m" onclick="somar(4, 1)">+</button>
-      </div>
-    </div>
+  <label for="cliente-zap">Seu WhatsApp (com DDD) *</label>
+  <input type="tel" id="cliente-zap" placeholder="(79) 99999-9999">
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros Ninho com Nutella</h3>
-        <p>Creme de Leite Ninho com Nutella</p>
-        <span class="preco">R$ 8,00</span>
-        <span class="sub-item" id="s5">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(5, -1)">-</button>
-        <span class="num" id="q5">0</span>
-        <button type="button" class="btn-m" onclick="somar(5, 1)">+</button>
-      </div>
-    </div>
+  <label for="tipo-entrega">Entrega ou Retirada *</label>
+  <select id="tipo-entrega" onchange="atualizarResumo()">
+    <option value="0">Retirar no local (Grátis)</option>
+    <option value="2.50">Entrega - Até 3 km (R$ 2,50)</option>
+    <option value="4.00">Entrega - Até 4 km (R$ 4,00)</option>
+  </select>
 
-    <div class="cat">👑 Churros Gourmet — R$ 10,00 cada</div>
+  <label for="cliente-endereco">Endereço (se for entrega)</label>
+  <input type="text" id="cliente-endereco" placeholder="Rua, número, ponto de referência">
 
-    <div class="card">
-      <div class="info">
-        <h3>Churros Gourmet</h3>
-        <p>Cobertura especial e confeitos</p>
-        <span class="preco">R$ 10,00</span>
-        <span class="sub-item" id="s6">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(6, -1)">-</button>
-        <span class="num" id="q6">0</span>
-        <button type="button" class="btn-m" onclick="somar(6, 1)">+</button>
-      </div>
-    </div>
+  <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp()">
+    📲 Enviar Pedido no WhatsApp
+  </button>
 
-    <div class="cat">🥤 Bebidas em Lata (350ml)</div>
+</div>
 
-    <div class="card">
-      <div class="info">
-        <h3>Fanta Laranja Lata</h3>
-        <p>350ml bem gelada</p>
-        <span class="preco">R$ 5,00</span>
-        <span class="sub-item" id="s7">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(7, -1)">-</button>
-        <span class="num" id="q7">0</span>
-        <button type="button" class="btn-m" onclick="somar(7, 1)">+</button>
-      </div>
-    </div>
+<script>
+  const produtos = [
+    { id: 0, categoria: "tradicionais", nome: "Churros Doce de Leite", desc: "Recheio cremoso de doce de leite", preco: 6.00, qtd: 0 },
+    { id: 1, categoria: "tradicionais", nome: "Churros Chocolate", desc: "Recheio cremoso de chocolate", preco: 6.00, qtd: 0 },
+    { id: 2, categoria: "tradicionais", nome: "Churros Misto", desc: "Doce de leite e chocolate juntos", preco: 6.00, qtd: 0 },
+    { id: 3, categoria: "especiais", nome: "Churros de Nutella", desc: "Creme de avelã Nutella original", preco: 8.00, qtd: 0 },
+    { id: 4, categoria: "bebidas", nome: "Coca-Cola Lata", desc: "350ml bem gelada", preco: 6.00, qtd: 0 }
+  ];
 
-    <div class="card">
-      <div class="info">
-        <h3>Guaraná Antarctica Lata</h3>
-        <p>350ml bem gelado</p>
-        <span class="preco">R$ 5,00</span>
-        <span class="sub-item" id="s8">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(8, -1)">-</button>
-        <span class="num" id="q8">0</span>
-        <button type="button" class="btn-m" onclick="somar(8, 1)">+</button>
-      </div>
-    </div>
+  function renderizarCardapio() {
+    document.getElementById("lista-tradicionais").innerHTML = "";
+    document.getElementById("lista-especiais").innerHTML = "";
+    document.getElementById("lista-bebidas").innerHTML = "";
 
-    <div class="card">
-      <div class="info">
-        <h3>Coca-Cola Lata</h3>
-        <p>350ml bem gelada</p>
-        <span class="preco">R$ 6,00</span>
-        <span class="sub-item" id="s9">0 un. = R$ 0,00</span>
-      </div>
-      <div class="btns">
-        <button type="button" class="btn-m" onclick="somar(9, -1)">-</button>
-        <span class="num" id="q9">0</span>
-        <button type="button" class="btn-m" onclick="somar(9, 1)">+</button>
-      </div>
-    </div>
+    produtos.forEach(prod => {
+      const subtotal = (prod.qtd * prod.preco).toFixed(2).replace(".", ",");
+      const precoFormatado = prod.preco.toFixed(2).replace(".", ",");
 
-    <div class="box">
-      <h2>📋 Finalizar Pedido</h2>
-
-      <div class="sacola" id="resumo-box">
-        <strong>🛒 Nenhum item selecionado ainda.</strong><br>
-        Sem entrega: R$ 0,00<br>
-        Com entrega: R$ 0,00
-      </div>
-
-      <div class="campo">
-        <label>Seu Nome *</label>
-        <input type="text" id="nome" placeholder="Digite seu nome" />
-      </div>
-
-      <div class="campo">
-        <label>Seu WhatsApp (com DDD) *</label>
-        <input type="tel" id="telefone" placeholder="(79) 99999-9999" />
-      </div>
-
-      <div class="campo">
-        <label>Entrega ou Retirada *</label>
-        <select id="entrega" onchange="recalcular()">
-          <option value="Entrega">Entrega (Até 3 km: R$ 2,50 | Até 4 km: R$ 4,00)</option>
-          <option value="Retirada">Retirar no local (Grátis - R$ 0,00)</option>
-        </select>
-      </div>
-
-      <div id="area-endereco">
-        <div class="campo">
-          <label>Calcular Taxa pelo GPS (José Conrado de Araújo)</label>
-          <button type="button" class="btn-gps" onclick="checarGps()">📍 Calcular taxa pela minha localização</button>
-          <div id="msg-gps" class="aviso-gps"></div>
+      const cardHTML = `
+        <div class="card">
+          <div class="info">
+            <h3>${prod.nome}</h3>
+            <p>${prod.desc}</p>
+            <div class="preco">R$ ${precoFormatado}</div>
+            <div class="subtotal-item">${prod.qtd} un. = R$ ${subtotal}</div>
+          </div>
+          <div class="controles">
+            <button type="button" class="btn-qtd" onclick="alterarQtd(${prod.id}, -1)">-</button>
+            <span class="qtd-valor">${prod.qtd}</span>
+            <button type="button" class="btn-qtd" onclick="alterarQtd(${prod.id}, 1)">+</button>
+          </div>
         </div>
+      `;
 
-        <div class="campo">
+      document.getElementById(`lista-${prod.categoria}`).innerHTML += cardHTML;
+    });
+  }
+
+  function alterarQtd(id, delta) {
+    const item = produtos.find(p => p.id === id);
+    if (!item) return;
+    item.qtd += delta;
+    if (item.qtd < 0) item.qtd = 0;
+    renderizarCardapio();
+    atualizarResumo();
+  }
+
+  function atualizarResumo() {
+    const selecionados = produtos.filter(p => p.qtd > 0);
+    const resumoDiv = document.getElementById("resumo-itens");
+    const taxaEntrega = parseFloat(document.getElementById("tipo-entrega").value);
+
+    if (selecionados.length === 0) {
+      resumoDiv.innerHTML = "🛒 Nenhum item selecionado ainda.";
+      document.getElementById("valor-total").innerText = taxaEntrega.toFixed(2).replace(".", ",");
+      return;
+    }
+
+    let somaProdutos = 0;
+    let htmlItens = "";
+
+    selecionados.forEach(p => {
+      const sub = p.qtd * p.preco;
+      somaProdutos += sub;
+      htmlItens += `<div>• ${p.qtd}x ${p.nome} — R$ ${sub.toFixed(2).replace(".", ",")}</div>`;
+    });
+
+    const totalGeral = somaProdutos + taxaEntrega;
+    resumoDiv.innerHTML = htmlItens;
+    document.getElementById("valor-total").innerText = totalGeral.toFixed(2).replace(".", ",");
+  }
+
+  function enviarWhatsApp() {
+    const selecionados = produtos.filter(p => p.qtd > 0);
+    if (selecionados.length === 0) {
+      alert("Selecione pelo menos 1 item antes de enviar o pedido.");
+      return;
+    }
+
+    const nome = document.getElementById("cliente-nome").value.trim();
+    const zapCliente = document.getElementById("cliente-zap").value.trim();
+    const selectEntrega = document.getElementById("tipo-entrega");
+    const taxaEntrega = parseFloat(selectEntrega.value);
+    const textoEntrega = selectEntrega.options[selectEntrega.selectedIndex].text;
+    const endereco = document.getElementById("cliente-endereco").value.trim();
+
+    if (!nome || !zapCliente) {
+      alert("Por favor, preencha seu Nome e WhatsApp.");
+      return;
+    }
+
+    let mensagem = `*NOVO PEDIDO - CHURROS & CIA ARACAJU*\n\n`;
+    mensagem += `*Cliente:* ${nome}\n`;
+    mensagem += `*WhatsApp:* ${zapCliente}\n`;
+    mensagem += `*Opção:* ${textoEntrega}\n`;
+    if (endereco) mensagem += `*Endereço:* ${endereco}\n`;
+    mensagem += `\n*Itens do Pedido:*\n`;
+
+    let total = taxaEntrega;
+    selecionados.forEach(p => {
+      const sub = p.qtd * p.preco;
+      total += sub;
+      mensagem += `- ${p.qtd}x ${p.nome} (R$ ${sub.toFixed(2).replace(".", ",")})\n`;
+    });
+
+    mensagem += `\n*TOTAL A PAGAR: R$ ${total.toFixed(2).replace(".", ",")}*`;
+
+    const numeroLoja = "5579991561236";
+    const url = `https://wa.me{numeroLoja}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
+  }
+
+  renderizarCardapio();
+</script>
+
+</body>
+</html>
