@@ -2,55 +2,58 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Churros & Cia Aracaju - Cardápio Digital</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #fff8f0 !important; color: #3b2314 !important; padding-bottom: 115px; }
+    body { background-color: #fff8f0 !important; color: #3b2314 !important; padding-bottom: 130px; }
     header { background: linear-gradient(135deg, #5c2c16, #8b4513); color: #ffffff; text-align: center; padding: 20px 16px; border-bottom: 4px solid #f59e0b; }
     header img.logo-topo { max-width: 130px; height: auto; margin-bottom: 8px; border-radius: 12px; }
     header h1 { font-size: 1.5rem; margin-bottom: 4px; color: #ffffff; }
     header p { font-size: 0.9rem; color: #fef3c7; }
     .container { max-width: 600px; margin: 0 auto; padding: 16px; }
-    
+
     .categoria { margin-top: 22px; margin-bottom: 10px; font-size: 1.15rem; font-weight: 800; color: #78350f; border-bottom: 2px solid #f59e0b; padding-bottom: 4px; }
     .item { background: #ffffff; border: 1px solid #fde68a; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
     .item-info { padding-right: 10px; }
     .item-info h3 { font-size: 1.05rem; margin-bottom: 4px; color: #3b2314; }
     .item-info p { font-size: 0.85rem; color: #57534e; }
     .preco { font-weight: 800; color: #b45309; font-size: 1rem; margin-top: 5px; display: block; }
-    
+    .subtotal-item { font-size: 0.85rem; font-weight: 700; color: #15803d; margin-top: 3px; display: block; }
+
     .controles { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .btn-qtd { width: 36px; height: 36px; border-radius: 50%; border: none; background: #f59e0b; color: #ffffff; font-size: 1.3rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .btn-qtd:active { transform: scale(0.92); background: #d97706; }
-    .qtd-valor { font-weight: 800; font-size: 1.1rem; min-width: 22px; text-align: center; color: #3b2314; }
+    .btn-qtd { width: 40px; height: 40px; border-radius: 50%; border: none; background: #f59e0b; color: #ffffff; font-size: 1.4rem; font-weight: bold; cursor: pointer; touch-action: manipulation; }
+    .btn-qtd:active { background: #d97706; transform: scale(0.94); }
+    .qtd-valor { font-weight: 800; font-size: 1.15rem; min-width: 24px; text-align: center; color: #3b2314; }
 
     .checkout { background: #ffffff; border: 1px solid #fde68a; border-radius: 14px; padding: 18px; margin-top: 26px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
     .checkout h2 { font-size: 1.25rem; margin-bottom: 14px; color: #5c2c16; }
     .resumo-sacola { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.92rem; color: #3b2314; }
     .resumo-sacola h3 { font-size: 0.98rem; margin-bottom: 6px; color: #92400e; }
-    .linha-frete { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #d97706; color: #78350f; font-weight: 700; }
-    
+    .linha-frete { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #d97706; color: #78350f; font-weight: 700; line-height: 1.5; }
+
     .campo { margin-bottom: 14px; }
     .campo label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; color: #3b2314; }
-    .campo input, .campo select, .campo textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; background: #ffffff; color: #1f2937; }
-    
+    .campo input, .campo select, .campo textarea { width: 100%; padding: 11px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; background: #ffffff; color: #1f2937; }
+
     .btn-gps { background: #2563eb; color: #ffffff; border: none; padding: 11px 14px; border-radius: 8px; font-size: 0.92rem; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 8px; }
     .status-gps { font-size: 0.85rem; padding: 8px; border-radius: 6px; display: none; margin-bottom: 8px; font-weight: 600; }
     .gps-ok { background: #dcfce7; color: #166534; display: block; }
     .gps-erro { background: #fee2e2; color: #991b1b; display: block; }
-    
+
     .pix-box { background: #fef3c7; border: 1px dashed #d97706; padding: 14px; border-radius: 8px; margin-top: 8px; text-align: center; color: #3b2314; }
     .pix-box p { font-size: 0.88rem; margin-bottom: 8px; }
     .pix-box img.qr-img { max-width: 180px; height: auto; display: block; margin: 8px auto 12px auto; border-radius: 8px; border: 2px solid #ffffff; }
     .btn-copiar { background: #d97706; color: #ffffff; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 700; cursor: pointer; width: 100%; }
 
-    .barra-fixa { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 2px solid #f59e0b; padding: 10px 16px; box-shadow: 0 -3px 12px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; z-index: 100; }
+    .btn-wpp-grande { display: block; width: 100%; background: #25d366; color: #ffffff !important; text-align: center; text-decoration: none; padding: 15px; border-radius: 10px; font-size: 1.05rem; font-weight: 800; margin-top: 16px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+
+    .barra-fixa { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 2px solid #f59e0b; padding: 10px 16px; box-shadow: 0 -3px 12px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; z-index: 999; }
     .totais-box { display: flex; flex-direction: column; }
+    .linha-qtd-total { font-size: 0.8rem; font-weight: 700; color: #b45309; }
     .linha-sem-entrega { font-size: 0.82rem; color: #57534e; font-weight: 600; }
     .linha-com-entrega { font-size: 1.15rem; font-weight: 800; color: #15803d; }
-    .btn-whatsapp { background: #25d366; color: #ffffff; border: none; padding: 12px 18px; border-radius: 10px; font-size: 0.98rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
-    .btn-whatsapp:active { background: #1ebe5d; }
+    .btn-whatsapp-barra { background: #25d366; color: #ffffff !important; text-decoration: none; padding: 12px 16px; border-radius: 10px; font-size: 0.95rem; font-weight: 800; flex-shrink: 0; display: inline-block; }
   </style>
 </head>
 <body>
@@ -70,12 +73,13 @@
       <div class="item-info">
         <h3>Churros Doce de Leite</h3>
         <p>Massa crocante com recheio cremoso de doce de leite</p>
-        <span class="preco">R$ 6,00</span>
+        <span class="preco">Unitário: R$ 6,00</span>
+        <span class="subtotal-item" id="sub-1">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(1, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(1, -1)">-</button>
         <span class="qtd-valor" id="qtd-1">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(1, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(1, 1)">+</button>
       </div>
     </div>
 
@@ -83,12 +87,13 @@
       <div class="item-info">
         <h3>Churros Chocolate</h3>
         <p>Massa crocante com recheio de chocolate</p>
-        <span class="preco">R$ 6,00</span>
+        <span class="preco">Unitário: R$ 6,00</span>
+        <span class="subtotal-item" id="sub-2">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(2, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(2, -1)">-</button>
         <span class="qtd-valor" id="qtd-2">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(2, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(2, 1)">+</button>
       </div>
     </div>
 
@@ -96,12 +101,13 @@
       <div class="item-info">
         <h3>Churros Misto</h3>
         <p>Doce de leite e chocolate juntos</p>
-        <span class="preco">R$ 6,00</span>
+        <span class="preco">Unitário: R$ 6,00</span>
+        <span class="subtotal-item" id="sub-3">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(3, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(3, -1)">-</button>
         <span class="qtd-valor" id="qtd-3">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(3, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(3, 1)">+</button>
       </div>
     </div>
 
@@ -112,12 +118,13 @@
       <div class="item-info">
         <h3>Churros de Nutella</h3>
         <p>Recheado com creme de avelã Nutella original</p>
-        <span class="preco">R$ 8,00</span>
+        <span class="preco">Unitário: R$ 8,00</span>
+        <span class="subtotal-item" id="sub-4">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(4, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(4, -1)">-</button>
         <span class="qtd-valor" id="qtd-4">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(4, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(4, 1)">+</button>
       </div>
     </div>
 
@@ -125,12 +132,13 @@
       <div class="item-info">
         <h3>Churros Ninho com Nutella</h3>
         <p>Creme de Leite Ninho com Nutella</p>
-        <span class="preco">R$ 8,00</span>
+        <span class="preco">Unitário: R$ 8,00</span>
+        <span class="subtotal-item" id="sub-5">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(5, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(5, -1)">-</button>
         <span class="qtd-valor" id="qtd-5">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(5, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(5, 1)">+</button>
       </div>
     </div>
 
@@ -141,12 +149,13 @@
       <div class="item-info">
         <h3>Churros Gourmet</h3>
         <p>Cobertura especial e confeitos selecionados</p>
-        <span class="preco">R$ 10,00</span>
+        <span class="preco">Unitário: R$ 10,00</span>
+        <span class="subtotal-item" id="sub-6">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(6, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(6, -1)">-</button>
         <span class="qtd-valor" id="qtd-6">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(6, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(6, 1)">+</button>
       </div>
     </div>
 
@@ -157,44 +166,16 @@
       <div class="item-info">
         <h3>Fanta Laranja Lata</h3>
         <p>350ml bem gelada</p>
-        <span class="preco">R$ 5,00</span>
+        <span class="preco">Unitário: R$ 5,00</span>
+        <span class="subtotal-item" id="sub-7">Selecionado: 0 un. (R$ 0,00)</span>
       </div>
       <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(7, -1)">-</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(7, -1)">-</button>
         <span class="qtd-valor" id="qtd-7">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(7, 1)">+</button>
+        <button type="button" class="btn-qtd" onclick="mudarQtd(7, 1)">+</button>
       </div>
     </div>
 
     <div class="item">
       <div class="item-info">
         <h3>Guaraná Antarctica Lata</h3>
-        <p>350ml bem gelado</p>
-        <span class="preco">R$ 5,00</span>
-      </div>
-      <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(8, -1)">-</button>
-        <span class="qtd-valor" id="qtd-8">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(8, 1)">+</button>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="item-info">
-        <h3>Coca-Cola Lata</h3>
-        <p>350ml bem gelada</p>
-        <span class="preco">R$ 6,00</span>
-      </div>
-      <div class="controles">
-        <button type="button" class="btn-qtd" onclick="alterarQtd(9, -1)">-</button>
-        <span class="qtd-valor" id="qtd-9">0</span>
-        <button type="button" class="btn-qtd" onclick="alterarQtd(9, 1)">+</button>
-      </div>
-    </div>
-
-    <!-- CHECKOUT -->
-    <div class="checkout">
-      <h2>📋 Finalizar Pedido</h2>
-
-      <div class="resumo-sacola">
-        <h3>🛒 Itens do seu Pedido:</h3>
