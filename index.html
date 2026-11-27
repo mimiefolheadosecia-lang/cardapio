@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #fff8f0; color: #3b2314; padding-bottom: 100px; }
     header { background: linear-gradient(135deg, #5c2c16, #8b4513); color: #fff; text-align: center; padding: 20px 16px; border-bottom: 4px solid #f59e0b; }
-    header img.logo-topo { max-width: 150px; height: auto; margin-bottom: 8px; border-radius: 12px; }
+    header img.logo-topo { max-width: 140px; height: auto; margin-bottom: 8px; border-radius: 12px; }
     header h1 { font-size: 1.5rem; margin-bottom: 4px; }
     header p { font-size: 0.9rem; opacity: 0.95; }
     .container { max-width: 600px; margin: 0 auto; padding: 16px; }
@@ -23,6 +23,9 @@
     .qtd-valor { font-weight: 700; font-size: 1.05rem; min-width: 20px; text-align: center; }
     .checkout { background: #fff; border-radius: 14px; padding: 18px; margin-top: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
     .checkout h2 { font-size: 1.2rem; margin-bottom: 14px; color: #5c2c16; }
+    .resumo-sacola { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.9rem; }
+    .resumo-sacola h3 { font-size: 0.95rem; margin-bottom: 6px; color: #92400e; }
+    .linha-frete { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #fcd34d; color: #78350f; font-weight: 600; }
     .campo { margin-bottom: 14px; }
     .campo label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
     .campo input, .campo select, .campo textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; }
@@ -46,14 +49,20 @@
   <header>
     <img src="Logo.png" alt="Churros & Cia Aracaju" class="logo-topo" onerror="this.style.display='none'" />
     <h1>Churros & Cia Aracaju</h1>
-    <p>Delivery em até 4 km do José Conrado de Araújo</p>
+    <p>Entrega: até 3 km R$ 2,50 • até 4 km R$ 4,00 (José Conrado de Araújo)</p>
   </header>
 
   <div class="container">
     <div id="lista-cardapio"></div>
 
     <div class="checkout">
-      <h2>📋 Dados do Pedido</h2>
+      <h2>📋 Finalizar Pedido</h2>
+
+      <div class="resumo-sacola">
+        <h3>🛒 Resumo do Pedido:</h3>
+        <div id="lista-resumo-sacola">Nenhum item selecionado ainda. Role para cima e toque no botão <strong>+</strong>.</div>
+        <div id="resumo-frete" class="linha-frete">🛵 Entrega: R$ 2,50 (até 3 km) / R$ 4,00 (até 4 km)</div>
+      </div>
 
       <div class="campo">
         <label>Seu Nome *</label>
@@ -63,15 +72,15 @@
       <div class="campo">
         <label>Tipo de Entrega *</label>
         <select id="tipo-entrega" onchange="alternarEntrega()">
-          <option value="Entrega">Entrega (Raio de até 4 km)</option>
-          <option value="Retirada">Retirar no local</option>
+          <option value="Entrega">Entrega (Até 3 km: R$ 2,50 | Até 4 km: R$ 4,00)</option>
+          <option value="Retirada">Retirar no local (Grátis)</option>
         </select>
       </div>
 
       <div id="bloco-entrega">
         <div class="campo">
-          <label>Verificar Área de Entrega (Raio 4 km - José Conrado de Araújo)</label>
-          <button type="button" class="btn-gps" onclick="verificarDistancia()">📍 Validar minha localização atual</button>
+          <label>Calcular Taxa por Distância (José Conrado de Araújo) *</label>
+          <button type="button" class="btn-gps" onclick="verificarDistancia()">📍 Calcular taxa pelo meu GPS</button>
           <div id="status-gps" class="status-gps"></div>
         </div>
 
@@ -106,7 +115,7 @@
 
   <div class="barra-fixa">
     <div>
-      <div class="total-texto">Total do Pedido</div>
+      <div class="total-texto" id="label-total">Total (Produtos + Entrega)</div>
       <div class="total-valor" id="total-geral">R$ 0,00</div>
     </div>
     <button type="button" class="btn-whatsapp" onclick="enviarPedidoWhatsApp()">
@@ -116,16 +125,20 @@
 
   <script>
     // =====================================================================
-    // CONFIGURAÇÕES DO CARDÁPIO E RAIO DE ENTREGA
+    // CONFIGURAÇÕES DO CARDÁPIO E TAXAS DE ENTREGA
     // =====================================================================
     const WHATSAPP_LOJA = "5579991561236";
     // Coordenadas de referência: Bairro José Conrado de Araújo, Aracaju - SE
     const LOJA_LAT = -10.9168;
     const LOJA_LON = -37.0865;
-    const RAIO_MAXIMO_KM = 4.0;
+    const RAIO_FAIXA_1_KM = 3.0;
+    const TAXA_FAIXA_1 = 2.50;
+    const RAIO_FAIXA_2_KM = 4.0;
+    const TAXA_FAIXA_2 = 4.00;
 
     let distanciaValidada = null;
     let foraDoRaio = false;
+    let taxaEntregaAtual = TAXA_FAIXA_1; // Padrão inicial R$ 2,50 até validar GPS
 
     const PRODUTOS = [
       { id: 1, categoria: "🍩 Churros Tradicionais (R$ 6,00)", nome: "Churros Doce de Leite", desc: "Massa crocante com recheio cremoso de doce de leite", preco: 6.00 },
@@ -135,13 +148,11 @@
       { id: 4, categoria: "⭐ Churros Especiais (R$ 8,00)", nome: "Churros de Nutella", desc: "Recheado com creme de avelã Nutella original", preco: 8.00 },
       { id: 5, categoria: "⭐ Churros Especiais (R$ 8,00)", nome: "Churros Ninho com Nutella", desc: "Creme de Leite Ninho com Nutella", preco: 8.00 },
 
-      { id: 6, categoria: "👑 Gourmet & Gelados", nome: "Churros Gourmet", desc: "Cobertura especial e confeitos selecionados", preco: 10.00 },
-      { id: 7, categoria: "👑 Gourmet & Gelados", nome: "Geladinho Gourmet", desc: "Cremoso e refrescante", preco: 7.00 },
+      { id: 6, categoria: "👑 Churros Gourmet (R$ 10,00)", nome: "Churros Gourmet", desc: "Cobertura especial e confeitos selecionados", preco: 10.00 },
 
-      { id: 8, categoria: "🥤 Bebidas", nome: "Coca-Cola Lata (350ml)", desc: "Bem gelada", preco: 5.00 },
-      { id: 9, categoria: "🥤 Bebidas", nome: "Fanta Laranja Lata (350ml)", desc: "Bem gelada", preco: 6.00 },
-      { id: 10, categoria: "🥤 Bebidas", nome: "Guaraná Antarctica Lata (350ml)", desc: "Bem gelado", preco: 6.00 },
-      { id: 11, categoria: "🥤 Bebidas", nome: "Água Mineral (500ml)", desc: "Sem gás", preco: 2.50 }
+      { id: 7, categoria: "🥤 Bebidas em Lata", nome: "Fanta Laranja Lata (350ml)", desc: "Bem gelada", preco: 5.00 },
+      { id: 8, categoria: "🥤 Bebidas em Lata", nome: "Guaraná Antarctica Lata (350ml)", desc: "Bem gelado", preco: 5.00 },
+      { id: 9, categoria: "🥤 Bebidas em Lata", nome: "Coca-Cola Lata (350ml)", desc: "Bem gelada", preco: 6.00 }
     ];
 
     const carrinho = {};
@@ -158,23 +169,3 @@
       PRODUTOS.forEach(prod => {
         if (prod.categoria !== categoriaAtual) {
           categoriaAtual = prod.categoria;
-          html += `<div class="categoria">${categoriaAtual}</div>`;
-        }
-
-        const qtd = carrinho[prod.id] || 0;
-        html += `
-          <div class="item">
-            <div class="item-info">
-              <h3>${prod.nome}</h3>
-              <p>${prod.desc}</p>
-              <span class="preco">${formatarMoeda(prod.preco)}</span>
-            </div>
-            <div class="controles">
-              <button type="button" class="btn-qtd" onclick="alterarQtd(${prod.id}, -1)">-</button>
-              <span class="qtd-valor" id="qtd-${prod.id}">${qtd}</span>
-              <button type="button" class="btn-qtd" onclick="alterarQtd(${prod.id}, 1)">+</button>
-            </div>
-          </div>
-        `;
-      });
-
